@@ -59,7 +59,7 @@ function grav_get_archives( $args = '' ) {
 	if ( 'monthly' == $r['type'] ) {
 		$query = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date $order $limit";
 		$key = md5( $query );
-		$key = "wp_get_archives:$key:$last_changed";
+		$key = "grav_get_archives:$key:$last_changed";
 		if ( ! $results = wp_cache_get( $key, 'posts' ) ) {
 			$results = $wpdb->get_results( $query );
 			wp_cache_set( $key, $results, 'posts' );
@@ -76,7 +76,7 @@ function grav_get_archives( $args = '' ) {
 				elseif ( $r['span'] ) {
 					$text .= '&nbsp;<span>(' . $result->posts . ')</span>' . $after;
 				}
-				$output .= get_archives_link( $url, $text, $r['format'], $r['before'], $r['after'], $r['span'] );
+				$output .= get_archives_link( $url, $text, $r['format'], $r['before'], $r['after'] );
 			}
 		}
 	}
